@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  redis-item:
+    image: redis:latest
+    container_name: redis-item
+    ports:
+      - "6379:6379"
+    networks:
+      - microstock-net
+
+  redis-order:
+    image: redis:latest
+    container_name: redis-order
+    ports:
+      - "6380:6379"
+    networks:
+      - microstock-net
+
+  item-service:
+    build: ./item-service
+    container_name: item-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis-item
+    networks:
+      - microstock-net
+
+  order-service:
+    build: ./order-service
+    container_name: order-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis-order
+      - item-service
+    networks:
+      - microstock-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - microstock-net
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_TRACING_ENABLED=true
+      - GF_TRACING_TEMPO_URL=http://tempo:3200
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - microstock-net
+
+  tempo:
+    image: grafana/tempo:latest
+    command: ["-config.file=/etc/tempo.yaml"]
+    volumes:
+      - ./tempo.yaml:/etc/tempo.yaml
+    ports:
+      - "3200:3200"   # Tempo API
+      - "4318:4318"   # OTLP HTTP receiver
+    networks:
+      - microstock-net
+
+volumes:
+  grafana-storage:
+
+networks:
+  microstock-net:

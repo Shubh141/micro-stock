@@ -1,0 +1,28 @@
+# USE THESE DOCS TO BUILD TEMPO YAML
+# https://grafana.com/docs/tempo/latest/configuration/#minimal-tempo-config
+
+server:
+  http_listen_address: 0.0.0.0  # Required for external containers to access Tempo
+  http_listen_port: 3200        # Tempo's query/frontend port (e.g. for Grafana UI)
+
+distributor:
+  receivers:
+    otlp:
+      protocols:
+        http:
+          endpoint: 0.0.0.0:4318  # Explicitly set OTLP receiver (port 4318 for http) to be accessible
+
+ingester:
+  trace_idle_period: 10s
+  max_block_bytes: 1000000
+  max_block_duration: 5m
+
+compactor:
+  compaction:
+    block_retention: 1h
+
+storage:
+  trace:
+    backend: local
+    local:
+      path: /tmp/tempo        # Store on local disk at this path for now (can use S3, gcs, etc. in a real system)
