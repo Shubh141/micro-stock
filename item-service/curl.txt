@@ -1,0 +1,46 @@
+
+Set stock for an item
+Sets or updates the stock level for a given item.
+```bash
+curl -X POST http://localhost:8080/stock/apple \
+  -H "Content-Type: application/json" \
+  -d '{"stock": 10}'
+```
+
+Get stock for an item
+Retrieves the current stock level for a given item.
+```bash
+curl http://localhost:8080/stock/apple
+```
+
+Decrement stock for an item
+Reduces the stock count by the specified quantity.
+```bash
+curl -X POST http://localhost:8080/stock/apple/decrement \
+  -H "Content-Type: application/json" \
+  -d '{"quantity": 3}'
+```
+
+Delete an item from stock
+Removes the item and its stock record from Redis.
+```bash
+curl -X DELETE http://localhost:8080/stock/apple
+```
+
+List all items and their stock
+Returns all items currently stored with their stock levels.
+```bash
+curl http://localhost:8080/stock
+```
+
+Health check
+Checks if the service is alive and healthy.
+```bash
+curl http://localhost:8080/healthz
+```
+
+Prometheus metrics
+Exposes metrics in Prometheus format for monitoring.
+```bash
+curl http://localhost:8080/metrics
+```

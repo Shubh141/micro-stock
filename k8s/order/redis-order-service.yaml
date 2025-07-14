@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-order
+spec:
+  selector:
+    matchLabels:
+      app: redis-order
+  template:
+    metadata:
+      labels:
+        app: redis-order
+    spec:
+      containers:
+      - name: redis-order
+        image: redis:latest
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+        - name: redis-order-storage
+          mountPath: /data
+      volumes:
+      - name: redis-order-storage
+        persistentVolumeClaim:
+          claimName: redis-order-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-order
+spec:
+  selector:
+    app: redis-order
+  ports:
+  - port: 6379
+    targetPort: 6379

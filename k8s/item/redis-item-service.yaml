@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-item
+spec:
+  selector:
+    matchLabels:
+      app: redis-item
+  template:
+    metadata:
+      labels:
+        app: redis-item
+    spec:
+      containers:
+      - name: redis-item
+        image: redis:latest
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+        - name: redis-item-storage
+          mountPath: /data
+      volumes:
+      - name: redis-item-storage
+        persistentVolumeClaim:
+          claimName: redis-item-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-item
+spec:
+  selector:
+    app: redis-item
+  ports:
+  - port: 6379
+    targetPort: 6379
