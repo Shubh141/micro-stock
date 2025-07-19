@@ -1,0 +1,63 @@
+
+Create a single node cluster on google cloud:
+gcloud container clusters create micro-stock-cluster \
+  --zone australia-southeast1-b \
+  --num-nodes 1 \
+  --enable-ip-alias
+
+Authenticate kubectl:
+gcloud container clusters get-credentials micro-stock-cluster \
+  --zone australia-southeast1-b
+
+How to test our item deployment:
+	• Note that we are using Google cloud, so we need to port-forward from our mac to GKE:
+kubectl port-forward svc/item-service 8080:8080
+
+For service, in a different terminal:
+kubectl port-forward svc/order-service 8081:8081
+
+For grafana, in a different terminal:
+kubectl port-forward svc/grafana 3000:3000
+
+
+Set stock for some items:
+curl -X POST http://localhost:8080/stock/apple \
+  -H "Content-Type: application/json" \
+  -d '{"stock": 10}'
+
+curl -X POST http://localhost:8080/stock/banana \
+  -H "Content-Type: application/json" \
+  -d '{"stock": 20}'
+
+curl -X POST http://localhost:8080/stock/orange \
+  -H "Content-Type: application/json" \
+  -d '{"stock": 15}'
+
+Get stock for one item:
+curl http://localhost:8080/stock/apple
+
+
+List all items:
+curl http://localhost:8080/stock
+
+Decrement stock for an item:
+curl -X POST http://localhost:8080/stock/banana/decrement \
+  -H "Content-Type: application/json" \
+  -d '{"quantity": 5}'
+
+
+Delete an item:
+curl -X DELETE http://localhost:8080/stock/orange
+
+Health check:
+curl http://localhost:8080/healthz
+
+
+Order:
+curl -X POST http://localhost:8081/order \
+  -H "Content-Type: application/json" \
+  -d '{"item": "orange", "quantity": 3}'
+
+
+Delete cluster:
+gcloud container clusters delete micro-stock-cluster --zone australia-southeast1-b
