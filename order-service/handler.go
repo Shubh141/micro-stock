@@ -22,6 +22,8 @@ func PlaceOrder(rdb *redis.Client) gin.HandlerFunc {
 		ctx, span := tracer.Start(c.Request.Context(), "PlaceOrder")
 		defer span.End()
 
+		fmt.Println("order-service TraceID:", span.SpanContext().TraceID().String())
+
 		var req struct {
 			Item     string `json:"item"`
 			Quantity int    `json:"quantity"`
@@ -43,6 +45,8 @@ func PlaceOrder(rdb *redis.Client) gin.HandlerFunc {
 		getURL := fmt.Sprintf("http://item-service:8080/stock/%s", req.Item)
 
 		getCtx, getSpan := tracer.Start(ctx, "GET item-service /stock/:item")
+		fmt.Println("order-service GET TraceID:", getSpan.SpanContext().TraceID().String())
+
 		getReq, err := http.NewRequestWithContext(getCtx, "GET", getURL, nil)
 		if err != nil {
 			getSpan.End()
@@ -98,6 +102,8 @@ func PlaceOrder(rdb *redis.Client) gin.HandlerFunc {
 		jsonBody, _ := json.Marshal(payload)
 
 		decCtx, decSpan := tracer.Start(ctx, "POST item-service /stock/:item/decrement")
+		fmt.Println("order-service POST TraceID:", decSpan.SpanContext().TraceID().String())
+
 		postReq, err := http.NewRequestWithContext(decCtx, "POST", decURL, bytes.NewBuffer(jsonBody))
 		if err != nil {
 			decSpan.End()
