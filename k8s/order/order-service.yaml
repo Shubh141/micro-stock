@@ -13,7 +13,8 @@ spec:
     spec:
       containers:
       - name: order
-        image: shubh141/order-service
+        image: shubh141/order-service:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8081
 ---
