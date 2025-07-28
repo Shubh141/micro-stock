@@ -29,19 +29,15 @@ tempo:
   pvc:
     enabled: true
     storage: 1Gi
-    accessModes:
-      - ReadWriteOnce
+    accessMode1: ReadWriteOnce
     storageClassName: standard-rwo
 
   service:
     type: ClusterIP
-    ports:
-      - name: tempo-ui
-        port: 3200
-        targetPort: 3200
-      - name: otlp-http
-        port: 4318
-        targetPort: 4318
+    port1: 3200
+    targetPort1: 3200
+    port2: 4318
+    targetPort2: 4318
 
 
 prometheus:

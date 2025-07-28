@@ -56,9 +56,7 @@ metadata:
     app: tempo
 spec:
   accessModes:
-{{- range .Values.tempo.pvc.accessModes }}
-  - {{ . }}
-{{- end }}
+    - {{ .Values.tempo.pvc.accessMode1 }}
   resources:
     requests:
       storage: {{ .Values.tempo.pvc.storage }}
@@ -74,8 +72,9 @@ spec:
     app: tempo
   type: {{ .Values.tempo.service.type }}
   ports:
-{{- range .Values.tempo.service.ports }}
-  - name: {{ .name }}
-    port: {{ .port }}
-    targetPort: {{ .targetPort }}
-{{- end }}
+    - name: tempo-ui
+      port: {{ .Values.tempo.service.port1 }}
+      targetPort: {{ .Values.tempo.service.targetPort1 }}
+    - name: otlp-http
+      port: {{ .Values.tempo.service.port2 }}
+      targetPort: {{ .Values.tempo.service.targetPort2 }}
