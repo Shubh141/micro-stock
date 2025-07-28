@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-order-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.redis.pvc.storage }}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-order
+spec:
+  selector:
+    matchLabels:
+      app: redis-order
+  template:
+    metadata:
+      labels:
+        app: redis-order
+    spec:
+      containers:
+        - name: redis-order
+          image: {{ .Values.redis.image }}
+          ports:
+            - containerPort: {{ .Values.redis.port }}
+          volumeMounts:
+            - name: redis-order-storage
+              mountPath: /data
+      volumes:
+        - name: redis-order-storage
+          persistentVolumeClaim:
+            claimName: redis-order-pvc

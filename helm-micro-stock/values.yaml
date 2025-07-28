@@ -1,0 +1,85 @@
+tempo:
+  name: tempo
+  appLabel: tempo
+  replicaCount: 1
+
+  server:
+    http_listen_address: "0.0.0.0"
+    http_listen_port: 3200
+
+  distributor:
+    otlp_http_endpoint: "0.0.0.0:4318"
+    otlp_http_port: 4318
+
+  ingester:
+    trace_idle_period: "10s"
+    max_block_bytes: 1000000
+    max_block_duration: "5m"
+
+  compactor:
+    compaction:
+      block_retention: "1h"
+
+  storage:
+    trace:
+      backend: local
+      local_path: "/tmp/tempo"
+
+  pvc:
+    name: tempo-pvc
+    accessMode: ReadWriteOnce
+    storage: 1Gi
+
+  image:
+    repository: grafana/tempo
+    tag: latest
+
+  securityContext:
+    fsGroup: 1000
+
+  service:
+    tempo_ui_port: 3200
+    otlp_http_port: 4318
+
+
+
+prometheus:
+  prometheusSpec:
+    scrapeInterval: "5s"
+    additionalScrapeConfigs:
+      - job_name: 'item-service'
+        static_configs:
+          - targets: ['item-service:8080']
+      - job_name: 'order-service'
+        static_configs:
+          - targets: ['order-service:8081']
+
+
+grafana:
+  image:
+    repository: grafana/grafana-oss
+    tag: latest
+
+  adminUser: admin
+  adminPassword: admin
+
+  persistence:
+    enabled: true
+    size: 1Gi
+    accessModes:
+      - ReadWriteOnce
+    storageClassName: ""
+
+  env:
+    GF_TRACING_ENABLED: "true"
+    GF_TRACING_TEMPO_URL: "http://tempo:3200"
+
+  service:
+    type: ClusterIP
+    port: 3000
+
+  securityContext:
+    fsGroup: 472
+
+  serviceAccount:
+    create: true

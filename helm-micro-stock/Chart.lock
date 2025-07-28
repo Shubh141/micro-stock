@@ -1,0 +1,18 @@
+dependencies:
+- name: item-service
+  repository: file://charts/item-service
+  version: 0.1.0
+- name: order-service
+  repository: file://charts/order-service
+  version: 0.1.0
+- name: tempo
+  repository: https://grafana.github.io/helm-charts
+  version: 1.7.0
+- name: prometheus
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 25.18.0
+- name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 7.3.9
+digest: sha256:810cbeba0eab220e09b3817101759b741667d7119fc959ab2eb9d0c73e4eb06a
+generated: "2025-07-28T19:23:36.080847+10:00"

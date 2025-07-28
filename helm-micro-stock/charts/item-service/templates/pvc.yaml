@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-item-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.redis.pvc.storage }}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-item
+spec:
+  selector:
+    matchLabels:
+      app: redis-item
+  template:
+    metadata:
+      labels:
+        app: redis-item
+    spec:
+      containers:
+        - name: redis-item
+          image: {{ .Values.redis.image }}
+          ports:
+            - containerPort: {{ .Values.redis.port }}
+          volumeMounts:
+            - name: redis-item-storage
+              mountPath: /data
+      volumes:
+        - name: redis-item-storage
+          persistentVolumeClaim:
+            claimName: redis-item-pvc

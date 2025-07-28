@@ -1,0 +1,27 @@
+apiVersion: v2
+name: helm-micro-stock
+description: A Helm chart for micro-stock microservices and observability stack
+type: application
+version: 0.1.0
+appVersion: "1.0"
+
+dependencies:
+  - name: item-service
+    version: "0.1.0"
+    repository: "file://charts/item-service"
+
+  - name: order-service
+    version: "0.1.0"
+    repository: "file://charts/order-service"
+
+  - name: tempo
+    version: "1.7.0"
+    repository: "https://grafana.github.io/helm-charts"
+
+  - name: prometheus
+    version: "25.18.0"
+    repository: "https://prometheus-community.github.io/helm-charts"
+
+  - name: grafana
+    version: "7.3.9"
+    repository: "https://grafana.github.io/helm-charts"

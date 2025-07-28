@@ -1,0 +1,13 @@
+image:
+  repository: shubh141/item-service
+  tag: latest
+  pullPolicy: Always
+
+service:
+  port: 8080
+
+redis:
+  image: redis:latest
+  port: 6379
+  pvc:
+    storage: 1Gi
