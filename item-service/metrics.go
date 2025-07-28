@@ -54,7 +54,7 @@ var (
 		[]string{"path", "method", "code"},
 	)
 
-	// Counter for errors
+	// Counter for error status codes
 	HTTPErrorCounter = prometheus.NewCounterVec(
 		prometheus.CounterOpts{
 			Name: "http_errors_total",
@@ -64,7 +64,7 @@ var (
 	)
 )
 
-// Init registers all Prometheus metrics
+// Registers all Prometheus metrics
 func InitMetrics() {
 	prometheus.MustRegister(
 		ItemCreatedCounter,
@@ -76,12 +76,12 @@ func InitMetrics() {
 	)
 }
 
-// PrometheusHandler exposes the /metrics endpoint
+// Exposes the /metrics endpoint
 func PrometheusHandler() gin.HandlerFunc {
 	return gin.WrapH(promhttp.Handler())
 }
 
-// TrackDurationMiddleware observes request durations
+// Observes request durations
 func TrackDurationMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
@@ -92,7 +92,7 @@ func TrackDurationMiddleware() gin.HandlerFunc {
 	}
 }
 
-// TrackStatusMiddleware tracks all HTTP statuses (and errors separately)
+// Tracks all HTTP statuses (and errors separately)
 func TrackStatusMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Next()

@@ -45,15 +45,9 @@ tempo:
 
 
 prometheus:
-  prometheusSpec:
-    scrapeInterval: "5s"
-    additionalScrapeConfigs:
-      - job_name: 'item-service'
-        static_configs:
-          - targets: ['item-service:8080']
-      - job_name: 'order-service'
-        static_configs:
-          - targets: ['order-service:8081']
+  scrapeInterval: 5s
+  containerPort: 9090
+  servicePort: 9090
 
 
 grafana:
