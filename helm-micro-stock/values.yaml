@@ -1,46 +1,47 @@
 tempo:
-  name: tempo
-  appLabel: tempo
-  replicaCount: 1
+  config: |
+    server:
+      http_listen_address: 0.0.0.0
+      http_listen_port: 3200
 
-  server:
-    http_listen_address: "0.0.0.0"
-    http_listen_port: 3200
+    distributor:
+      receivers:
+        otlp:
+          protocols:
+            http:
+              endpoint: 0.0.0.0:4318
 
-  distributor:
-    otlp_http_endpoint: "0.0.0.0:4318"
-    otlp_http_port: 4318
+    ingester:
+      trace_idle_period: 10s
+      max_block_bytes: 1000000
+      max_block_duration: 5m
 
-  ingester:
-    trace_idle_period: "10s"
-    max_block_bytes: 1000000
-    max_block_duration: "5m"
+    compactor:
+      compaction:
+        block_retention: 1h
 
-  compactor:
-    compaction:
-      block_retention: "1h"
-
-  storage:
-    trace:
-      backend: local
-      local_path: "/tmp/tempo"
+    storage:
+      trace:
+        backend: local
+        local:
+          path: /tmp/tempo
 
   pvc:
-    name: tempo-pvc
-    accessMode: ReadWriteOnce
+    enabled: true
     storage: 1Gi
-
-  image:
-    repository: grafana/tempo
-    tag: latest
-
-  securityContext:
-    fsGroup: 1000
+    accessModes:
+      - ReadWriteOnce
+    storageClassName: standard-rwo
 
   service:
-    tempo_ui_port: 3200
-    otlp_http_port: 4318
-
+    type: ClusterIP
+    ports:
+      - name: tempo-ui
+        port: 3200
+        targetPort: 3200
+      - name: otlp-http
+        port: 4318
+        targetPort: 4318
 
 
 prometheus:

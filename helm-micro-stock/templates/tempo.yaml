@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -5,35 +6,10 @@ metadata:
   labels:
     app: tempo
 data:
-  tempo.yaml: |
-    server:
-      http_listen_address: 0.0.0.0
-      http_listen_port: 3200
-
-    distributor:
-      receivers:
-        otlp:
-          protocols:
-            http:
-              endpoint: 0.0.0.0:4318
-
-    ingester:
-      trace_idle_period: 10s
-      max_block_bytes: 1000000
-      max_block_duration: 5m
-
-    compactor:
-      compaction:
-        block_retention: 1h
-
-    storage:
-      trace:
-        backend: local
-        local:
-          path: /tmp/tempo
+  tempo.yaml: |-
+{{ .Values.tempo.config | indent 4 }}
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -72,7 +48,6 @@ spec:
             claimName: tempo-pvc
 
 ---
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -81,13 +56,15 @@ metadata:
     app: tempo
 spec:
   accessModes:
-    - ReadWriteOnce
+{{- range .Values.tempo.pvc.accessModes }}
+  - {{ . }}
+{{- end }}
   resources:
     requests:
-      storage: 1Gi
+      storage: {{ .Values.tempo.pvc.storage }}
+  storageClassName: {{ .Values.tempo.pvc.storageClassName }}
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -95,10 +72,10 @@ metadata:
 spec:
   selector:
     app: tempo
+  type: {{ .Values.tempo.service.type }}
   ports:
-    - name: tempo-ui
-      port: 3200
-      targetPort: 3200
-    - name: otlp-http
-      port: 4318
-      targetPort: 4318
+{{- range .Values.tempo.service.ports }}
+  - name: {{ .name }}
+    port: {{ .port }}
+    targetPort: {{ .targetPort }}
+{{- end }}
