@@ -70,7 +70,7 @@ kubectl port-forward svc/grafana 3000:3000
 > For Helm deployments, use `kubectl port-forward svc/micro-stock-grafana 3000:3000` to port-forward Grafana instead of the local service name.
 
 
-### Option 3: Option 3: Deploy with Helm
+### Option 3: Deploy with Helm
 ```bash
 helm install micro-stock ./helm-micro-stock
 ```
