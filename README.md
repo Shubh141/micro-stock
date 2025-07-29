@@ -17,13 +17,13 @@ docker-compose up --build
 ```
 Available at:
 
-Item Service: http://localhost:8080
+- Item Service: http://localhost:8080
 
-Order Service: http://localhost:8081
+- Order Service: http://localhost:8081
 
-Prometheus: http://localhost:9090
+- Prometheus: http://localhost:9090
 
-Grafana: http://localhost:3000 (admin/admin)
+- Grafana: http://localhost:3000 (admin/admin)
 
 ### Option 2: Run on Kubernetes via Makefile
 Create a cluster on GKE
