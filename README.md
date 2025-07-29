@@ -101,7 +101,7 @@ helm uninstall micro-stock
 ## Observability
 ### Tracing (OpenTelemetry + Tempo)
 Traces are automatically exported to Tempo via OpenTelemetry instrumentation in both services.
-![Traces](static/trace1.png)
+![Traces](static/trace2.png)
 
 Grafana is configured with a Tempo data source:
 ```bash
