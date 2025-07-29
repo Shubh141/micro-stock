@@ -66,7 +66,8 @@ kubectl port-forward svc/order-service 8081:8081
 kubectl port-forward svc/grafana 3000:3000
 ```
 
-> Note: If you deployed using Helm, use this service name for Grafana instead:
+> **Note:**
+> If you deployed using Helm, use this service name for Grafana instead:
 
 ```bash
 kubectl port-forward svc/micro-stock-grafana 3000:3000
@@ -136,10 +137,13 @@ Both item and order services expose a `/metrics` endpoint, which is scraped by P
 ### Grafana Configuration
 Grafana is configured with the following data sources:
 
-| Data Source | URL                                    | Purpose              |
-|-------------|-----------------------------------------|----------------------|
-| Prometheus  | `http://micro-stock-prometheus:9090`   | Metrics scraping     |
-| Tempo       | `http://tempo:3200`                    | Trace aggregation    |
+| Data Source | URL                    | Purpose           |
+|-------------|------------------------|-------------------|
+| Prometheus  | `http://prometheus:9090` | Metrics scraping  |
+| Tempo       | `http://tempo:3200`      | Trace aggregation |
+
+> **Note:**
+> For Helm deployments, use `http://micro-stock-prometheus:9090` for Prometheus instead of the local URL.
 
 
 ## Teardown
