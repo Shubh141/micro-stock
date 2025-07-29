@@ -4,7 +4,7 @@
 
 ## Architecture
 
-![System Architecture](images/architecture.png)
+![System Architecture](static/architecture.png)
 
 This diagram illustrates the core services (item-service and order-service), their connections to Redis, and the observability stack (Prometheus, Tempo, Grafana).
 
@@ -101,6 +101,7 @@ helm uninstall micro-stock
 ## Observability
 ### Tracing (OpenTelemetry + Tempo)
 Traces are automatically exported to Tempo via OpenTelemetry instrumentation in both services.
+![Traces](static/trace1.png)
 
 Grafana is configured with a Tempo data source:
 ```bash
@@ -109,6 +110,8 @@ http://tempo:3200
 
 ### Metrics (Prometheus + Grafana)
 Both services expose a `/metrics` endpoint, which is scraped by Prometheus and visualised via Grafana.
+![Metrics](static/metrics1.png)
+
 #### Exported Metrics
 
 | Metric Name                    | Type      | Description                                        | Labels                     |
