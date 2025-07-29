@@ -116,7 +116,7 @@ http://tempo:3200
 
 ### Metrics (Prometheus + Grafana)
 Both item and order services expose a `/metrics` endpoint, which is scraped by Prometheus and visualised via Grafana.
-![Metrics](static/metrics1.png)
+![Metrics](static/metrics2.png)
 
 #### Exported Metrics
 
