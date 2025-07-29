@@ -8,17 +8,6 @@
 
 This diagram illustrates the core services (item-service and order-service), their connections to Redis, and the observability stack (Prometheus, Tempo, Grafana).
 
-## Project Structure
-├── docker-compose.yml # Local dev setup
-├── helm-micro-stock/ # Helm chart for entire stack
-├── item-service/ # Item microservice (Golang + Redis)
-├── order-service/ # Order microservice (Golang + Redis)
-├── k8s/
-│ ├── infra/ # Prometheus, Grafana, Tempo manifests
-│ ├── item/ # K8s manifests for item-service
-│ └── order/ # K8s manifests for order-service
-├── Makefile # Kubernetes deployment automation
-└── README.md
 
 ## How to Run
 ### Option 1: Run Locally with Docker Compose
@@ -27,9 +16,13 @@ This diagram illustrates the core services (item-service and order-service), the
 docker-compose up --build
 ```
 Available at:
+
 Item Service: http://localhost:8080
+
 Order Service: http://localhost:8081
+
 Prometheus: http://localhost:9090
+
 Grafana: http://localhost:3000 (admin/admin)
 
 ### Option 2: Run on Kubernetes via Makefile
@@ -52,9 +45,13 @@ make deploy
 This will deploy the following components in order:
 
 Prometheus
+
 Tempo
+
 Grafana
+
 Item service and Redis
+
 Order service and Redis
 
 Clean up all resources
@@ -104,6 +101,7 @@ helm uninstall micro-stock
 ## Observability
 ### Tracing (OpenTelemetry + Tempo)
 Traces are automatically exported to Tempo via OpenTelemetry instrumentation in both services.
+
 Grafana is configured with a Tempo data source:
 ```bash
 http://tempo:3200
