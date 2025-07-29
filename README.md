@@ -44,17 +44,17 @@ make deploy
 ```
 This will deploy the following components in order:
 
-Prometheus
+- Prometheus
 
-Tempo
+- Tempo
 
-Grafana
+- Grafana
 
-Item service and Redis
+- Item service and Redis
 
-Order service and Redis
+- Order service and Redis
 
-Clean up all resources
+Clean up all resources:
 ```bash
 make clean
 ```
