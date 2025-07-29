@@ -66,6 +66,7 @@ kubectl port-forward svc/order-service 8081:8081
 kubectl port-forward svc/grafana 3000:3000
 ```
 
+
 ### Option 3: Option 3: Deploy with Helm
 ```bash
 helm install micro-stock ./helm-micro-stock
@@ -101,7 +102,7 @@ helm uninstall micro-stock
 ## Observability
 ### Tracing (OpenTelemetry + Tempo)
 Traces are automatically exported to Tempo via OpenTelemetry instrumentation in both services.
-![Traces](static/trace2.png)
+![Traces](static/trace3.png)
 
 Grafana is configured with a Tempo data source:
 ```bash
