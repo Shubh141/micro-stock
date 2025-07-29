@@ -66,6 +66,12 @@ kubectl port-forward svc/order-service 8081:8081
 kubectl port-forward svc/grafana 3000:3000
 ```
 
+> Note: If you deployed using Helm, use this service name for Grafana instead:
+
+```bash
+kubectl port-forward svc/micro-stock-grafana 3000:3000
+```
+
 
 ### Option 3: Option 3: Deploy with Helm
 ```bash
