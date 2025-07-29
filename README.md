@@ -102,15 +102,17 @@ helm uninstall micro-stock
 ## Observability
 ### Tracing (OpenTelemetry + Tempo)
 Traces are automatically exported to Tempo via OpenTelemetry instrumentation in both services.
-![Traces](static/trace3.png)
 
 Grafana is configured with a Tempo data source:
 ```bash
 http://tempo:3200
 ```
 
+![Traces](static/trace3.png)
+
+
 ### Metrics (Prometheus + Grafana)
-Both services expose a `/metrics` endpoint, which is scraped by Prometheus and visualised via Grafana.
+Both item and order services expose a `/metrics` endpoint, which is scraped by Prometheus and visualised via Grafana.
 ![Metrics](static/metrics1.png)
 
 #### Exported Metrics
