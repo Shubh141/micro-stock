@@ -4,7 +4,7 @@
 
 ## Architecture
 
-![System Architecture](static/arch.png)
+![System Architecture](static/Micro-Stock-Archictecture.png)
 
 This diagram illustrates the core services (item-service and order-service), their connections to Redis, and the observability stack (Prometheus, Tempo, Grafana).
 
@@ -103,9 +103,6 @@ helm uninstall micro-stock
 
 
 ## Observability
-![Observability](static/observability_diagram.svg)
-
-
 
 ### Tracing (OpenTelemetry + Tempo)
 Traces are automatically exported to Tempo via OpenTelemetry instrumentation in both services.
