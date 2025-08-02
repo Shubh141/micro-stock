@@ -4,7 +4,7 @@
 
 ## Architecture
 
-![System Architecture](static/Micro-Stock-Archictecture.png)
+![System Architecture](static/arch.pdf)
 
 This diagram illustrates the core services (item-service and order-service), their connections to Redis, and the observability stack (Prometheus, Tempo, Grafana).
 
