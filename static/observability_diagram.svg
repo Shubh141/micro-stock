@@ -1,0 +1,94 @@
+<svg viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="700" fill="#f8f9fa"/>
+  
+  <!-- Application Layer -->
+  <rect x="50" y="20" width="500" height="80" fill="#e9ecef" stroke="#6c757d" stroke-width="1" rx="5"/>
+  <text x="300" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Application Layer</text>
+  
+  <!-- Item Service -->
+  <rect x="80" y="50" width="120" height="40" fill="white" stroke="#6c757d" stroke-width="1" rx="3"/>
+  <text x="140" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="10">item-service</text>
+  <text x="140" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="10">Go + Gin + Redis</text>
+  
+  <!-- Order Service -->
+  <rect x="400" y="50" width="120" height="40" fill="white" stroke="#6c757d" stroke-width="1" rx="3"/>
+  <text x="460" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="10">order-service</text>
+  <text x="460" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="10">Go + Gin + Redis</text>
+  
+  <!-- Instrumentation arrows and label -->
+  <path d="M 200 75 Q 300 120 400 75" fill="none" stroke="#6c757d" stroke-width="1" marker-end="url(#arrowhead)"/>
+  <text x="300" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#6c757d">Instrumentation</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6c757d"/>
+    </marker>
+  </defs>
+  
+  <!-- OpenTelemetry SDK -->
+  <rect x="80" y="150" width="140" height="60" fill="white" stroke="#6c757d" stroke-width="1" rx="3"/>
+  <text x="150" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold">OpenTelemetry SDK</text>
+  <text x="150" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="9">Auto-instrumentation</text>
+  
+  <!-- Prometheus Metrics -->
+  <rect x="380" y="150" width="140" height="60" fill="white" stroke="#6c757d" stroke-width="1" rx="3"/>
+  <text x="450" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold">Prometheus Metrics</text>
+  <text x="450" y="185" text-anchor="middle" font-family="Arial, sans-serif" font-size="9">Custom + HTTP</text>
+  <text x="450" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="9">middleware</text>
+  
+  <!-- Arrows from services to instrumentation -->
+  <line x1="150" y1="90" x2="150" y2="150" stroke="#6c757d" stroke-width="1" marker-end="url(#arrowhead)"/>
+  <line x1="450" y1="90" x2="450" y2="150" stroke="#6c757d" stroke-width="1" marker-end="url(#arrowhead)"/>
+  
+  <!-- HTTP POST and GET labels -->
+  <text x="120" y="250" font-family="Arial, sans-serif" font-size="9" fill="#6c757d">HTTP POST</text>
+  <text x="420" y="250" font-family="Arial, sans-serif" font-size="9" fill="#6c757d">HTTP GET /metrics</text>
+  
+  <!-- Collection layer -->
+  <text x="300" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#6c757d">Collection</text>
+  
+  <!-- Tempo Collector -->
+  <rect x="80" y="300" width="140" height="60" fill="white" stroke="#6c757d" stroke-width="1" rx="3"/>
+  <text x="150" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="9">tempo:4318</text>
+  <text x="150" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold">OTLP HTTP Collector</text>
+  
+  <!-- Prometheus Scraper -->
+  <rect x="380" y="300" width="140" height="60" fill="white" stroke="#6c757d" stroke-width="1" rx="3"/>
+  <text x="450" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="9">prometheus:9090</text>
+  <text x="450" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold">Metrics Scraper</text>
+  
+  <!-- Arrows to collectors -->
+  <line x1="150" y1="210" x2="150" y2="300" stroke="#6c757d" stroke-width="1" marker-end="url(#arrowhead)"/>
+  <line x1="450" y1="210" x2="450" y2="300" stroke="#6c757d" stroke-width="1" marker-end="url(#arrowhead)"/>
+  
+  <!-- Storage layer -->
+  <text x="300" y="420" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#6c757d">Storage</text>
+  
+  <!-- Tempo Backend -->
+  <rect x="80" y="440" width="140" height="60" fill="white" stroke="#6c757d" stroke-width="1" rx="3"/>
+  <text x="150" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold">Tempo Backend</text>
+  <text x="150" y="480" text-anchor="middle" font-family="Arial, sans-serif" font-size="9">Trace Storage</text>
+  
+  <!-- Prometheus TSDB -->
+  <rect x="380" y="440" width="140" height="60" fill="white" stroke="#6c757d" stroke-width="1" rx="3"/>
+  <text x="450" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold">Prometheus TSDB</text>
+  <text x="450" y="480" text-anchor="middle" font-family="Arial, sans-serif" font-size="9">Time Series Storage</text>
+  
+  <!-- Arrows to storage -->
+  <line x1="150" y1="360" x2="150" y2="440" stroke="#6c757d" stroke-width="1" marker-end="url(#arrowhead)"/>
+  <line x1="450" y1="360" x2="450" y2="440" stroke="#6c757d" stroke-width="1" marker-end="url(#arrowhead)"/>
+  
+  <!-- Visualization layer -->
+  <text x="300" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#6c757d">Visualization</text>
+  
+  <!-- Grafana Dashboard -->
+  <rect x="230" y="580" width="140" height="60" fill="white" stroke="#6c757d" stroke-width="1" rx="3"/>
+  <text x="300" y="600" text-anchor="middle" font-family="Arial, sans-serif" font-size="9">grafana:3000</text>
+  <text x="300" y="620" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold">Unified Dashboard</text>
+  
+  <!-- Arrows to Grafana -->
+  <line x1="150" y1="500" x2="270" y2="580" stroke="#6c757d" stroke-width="1" marker-end="url(#arrowhead)"/>
+  <line x1="450" y1="500" x2="330" y2="580" stroke="#6c757d" stroke-width="1" marker-end="url(#arrowhead)"/>
+</svg>
